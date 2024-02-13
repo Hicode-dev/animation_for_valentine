@@ -1,4 +1,4 @@
-//自定义myChildren函数
+
 Element.prototype.myChildren=function(){
 	var child=this.childNodes;
 	var length=child.length;
@@ -12,11 +12,11 @@ Element.prototype.myChildren=function(){
 }
 var qiXi=function(){
     var confi = {
-    	//音乐参数
+    
         audio: {
-	        enable: true, // 是否开启音乐
-	        audio1:document.getElementById('audio1'), // 正常播放地址
-	        audio2:document.getElementById('audio2') // 正常循环播放地址
+	        enable: true, 
+	        audio1:document.getElementById('audio1'), 
+	        audio2:document.getElementById('audio2')
         },
         //时间控制
         setTime: {
@@ -376,29 +376,51 @@ function snowflake(){
        	},100);
 	}
 	function Html5Audio(audioobj) {
-		var audio=audioobj;
-		audio.play();
-		return{
-			end:function(callback){
-				audio.addEventListener('ended',function(){
+		var audio = audioobj;
+	
+		// Check if audio object exists
+		if (!audio) {
+			console.error("Audio object is not provided.");
+			return null;
+		}
+	
+		// Check if audio is supported by the browser
+		if (!audio.play) {
+			console.error("Audio playback is not supported by the browser.");
+			return null;
+		}
+	
+		// Return an object with play and end methods
+		return {
+			play: function() {
+				// Play audio
+				try {
+					audio.play();
+				} catch (error) {
+					console.error("Error playing audio:", error);
+				}
+			},
+			end: function(callback) {
+				audio.addEventListener('ended', function() {
 					callback();
-				},false);
+				}, false);
 			}
 		};
 	}
+	
 }
 window.onload=function(){
 	qiXi()
 };
-//页面滑动
+
 function Swipe(container,options){
-	//获取第一个子节点
+	
 	var ele=document.getElementsByClassName('content_wrap')[0];
-	//滑动对象
+	
 	var swipe={};
-	//li页面数量
+	
 	var slides=ele.myChildren();
-	//获取容器尺寸
+	
 	var width=container.offsetWidth,
 		height=container.offsetHeight;
 	//设置Li页面总宽度
